@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
 
-public function home()
+    public function home()
     {
         return view('home');
     }
