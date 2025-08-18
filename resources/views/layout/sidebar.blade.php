@@ -101,12 +101,12 @@
                         <p>Chats</p>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->routeIs('ajax-practices.index') ? 'active' : '' }}">
-                    <a href="{{ route('ajax-practice.index') }}">
+                {{-- <li class="nav-item {{ request()->routeIs('ajaxpractice.index') ? 'active' : '' }}">
+                    <a href="{{ route('ajaxpractice.index') }}">
                         <i class="fas fa-code"></i>
                         <p>AJAX Practice</p>
                     </a>
-                </li>
+                </li> --}}
 
         </div>
         </li>

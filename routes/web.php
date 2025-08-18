@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AjaxPracticeController;
 use App\Http\Middleware\Login;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -51,7 +52,7 @@ Route::middleware([Login::class])->group(function () {
     Route::post('/chat/send', [\App\Http\Controllers\ChatController::class, 'store'])->name('chat.send');
 
 
-Route::resource('ajax-practice', \App\Http\Controllers\AjaxPracticeController::class);
+    Route::resource('ajaxpractice', AjaxPracticeController::class);
 
 
 
