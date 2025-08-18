@@ -9,50 +9,54 @@ use Illuminate\Http\Request;
 
 class AjaxPracticeController extends Controller
 {
+    /**
+     * Show list
+     */
     public function index()
     {
-        $items = AjaxPractice::all();
-        return view('ajaxpractice.index', compact('items'));
+        $records = AjaxPractice::latest()->get();
+        return view('ajaxpractice.index', compact('records'));
     }
 
+    /**
+     * Store / Update record
+     */
     public function store(Request $request)
     {
-        dd($request->all());
         $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:ajax_practices,email,',
-        'phone' => 'nullable|string|max:20',
-        'address' => 'nullable|string',
-        'status' => 'required|string',
-    ]);
-
-        $item = AjaxPractice::create($request->only('name', 'description'));
-        return response()->json($item);
-    }
-
-    public function edit($id)
-    {
-        return response()->json(AjaxPractice::findOrFail($id));
-    }
-
-    public function update(Request $request, $id)
-    {
-       $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:ajax_practices,email,' . $id, // use $id in update
-            'phone' => 'nullable|string|max:20',
+            'name'    => 'required|string|max:255',
+            'email'   => 'required|email',
+            'phone'   => 'nullable|string|max:20',
             'address' => 'nullable|string',
-            'status' => 'required|string',
+            'status'  => 'required|in:active,inactive',
         ]);
 
-        $item = AjaxPractice::findOrFail($id);
-        $item->update($request->only('name', 'description'));
-        return response()->json($item);
+        $record = AjaxPractice::updateOrCreate(
+            ['id' => $request->id],
+            $request->only(['name', 'email', 'phone', 'address', 'status'])
+        );
+
+        return response()->json([
+            'success' => $request->id ? 'Record updated successfully.' : 'Record created successfully.',
+            'data'    => $record
+        ]);
     }
 
+    /**
+     * Edit record
+     */
+    public function edit($id)
+    {
+        $record = AjaxPractice::findOrFail($id);
+        return response()->json($record);
+    }
+
+    /**
+     * Delete record
+     */
     public function destroy($id)
     {
-        AjaxPractice::destroy($id);
-        return response()->json(['message' => 'Deleted successfully']);
+        AjaxPractice::findOrFail($id)->delete();
+        return response()->json(['success' => 'Record deleted successfully.']);
     }
 }
