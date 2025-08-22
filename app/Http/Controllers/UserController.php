@@ -75,7 +75,8 @@ class UserController extends Controller
             'address' => $request->address
         ]);
 
-        Mail::to($user->email)->send(new WelcomeUserMail($user));
+        // Mail::to($user->email)->queue(new WelcomeUserMail($user));
+        event(new \App\Events\UserRegistered($user));
 
         return redirect()->route('users.loginpage')->with('success', 'User registered successfully! Email sent.');
     }
