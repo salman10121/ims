@@ -27,7 +27,17 @@
                                 <td>{{ $order->order_number }}</td>
                                 <td>{{ $order->user?->name }}</td>
                                 <td>{{ $order->total_amount }}</td>
-                                <td>{{ ucfirst($order->status) }}</td>
+                                 <td>
+                                    @if ($order->status == 'paid')
+                                        <span class="badge bg-success">Paid</span>
+                                    @elseif ($order->status == 'pending')
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                    @elseif ($order->status == 'canceled')
+                                        <span class="badge bg-danger">Canceled</span>
+                                    @else
+                                        <span class="badge bg-secondary">{{ ucfirst($order->status) }}</span>
+                                    @endif
+                                </td>
 
                                 <td>
                                     <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-sm btn-warning">
