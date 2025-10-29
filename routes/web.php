@@ -16,7 +16,9 @@ Route::get('/', function () {
     return view('home');
 });
 Route::get('register', [App\Http\Controllers\UserController::class, 'create'])->name('register');
-Route::post('/users/store', [App\Http\Controllers\UserController::class, 'store'])->name('users.store');
+// Route::post('/users/store', [App\Http\Controllers\UserController::class, 'store'])->name('users.store');
+Route::post('/api/users/store', [App\Http\Controllers\UserController::class, 'store'])->name('api.users.store');
+
 
 Route::get('/users/login/page', [App\Http\Controllers\AuthController::class, 'loginpage'])->name('users.loginpage');
 Route::post('/users/login', [App\Http\Controllers\AuthController::class, 'login'])->name('users.login');
